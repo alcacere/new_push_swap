@@ -35,10 +35,10 @@ int main(void)
 
     // Tests OKEOSOS (Evaluacion de 42)
     char *args5[] = {"./push_swap", "123", "12", "4", "58 34 22 6", "75"};
-    run_test("String con multiples nums", 6, args5, 1);
+    run_test("String multiples nums", 6, args5, 1);
 
     char *args6[] = {"./push_swap", "123", "      4727 77899 23424534   "};
-    run_test("String con espacios extremos", 3, args6, 1);
+    run_test("String espacios extremos", 3, args6, 1);
 
     char *args7[] = {"./push_swap", "1", " 2 a 3 "};
     run_test("Letra escondida en string", 3, args7, 0);
@@ -48,6 +48,33 @@ int main(void)
 
     char *args9[] = {"./push_swap", "1", "     "};
     run_test("Solo espacios en comillas", 3, args9, 0);
+
+    // NUEVO: TESTS EXTREMOS DE SIGNOS
+    printf("\n--- CASOS EXTREMOS DE SIGNOS ---\n");
+    
+    char *args10[] = {"./push_swap", "+5"};
+    run_test("Signo positivo explicito (+5)", 2, args10, 1);
+
+    char *args11[] = {"./push_swap", "++5"};
+    run_test("Doble signo (++5)", 2, args11, 0);
+
+    char *args12[] = {"./push_swap", "--5"};
+    run_test("Doble signo (--5)", 2, args12, 0);
+
+    char *args13[] = {"./push_swap", "5-"};
+    run_test("Signo al final (5-)", 2, args13, 0);
+
+    char *args14[] = {"./push_swap", "- 5"};
+    run_test("Espacio tras signo (- 5)", 2, args14, 0);
+
+    char *args15[] = {"./push_swap", "+"};
+    run_test("Signo solitario (+)", 2, args15, 0);
+
+    char *args16[] = {"./push_swap", "-"};
+    run_test("Signo solitario (-)", 2, args16, 0);
+
+    char *args17[] = {"./push_swap", "123+45"};
+    run_test("Signo en medio (123+45)", 2, args17, 0);
 
     return (0);
 }

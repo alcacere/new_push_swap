@@ -1,5 +1,3 @@
-/* src/setup/parsing.c */
-
 #include "push_swap.h"
 
 /* Convierte el string actual a long. Se detiene al encontrar un espacio */
