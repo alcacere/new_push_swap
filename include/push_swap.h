@@ -6,10 +6,6 @@
 # include <stdbool.h>
 # include <limits.h>
 
-/* ========================================================================== */
-/* 📦 DATA STRUCTURES DESIGN                                                  */
-/* ========================================================================== */
-
 /* Nodo individual: Contiene los datos, metadatos del algoritmo y punteros */
 typedef struct s_node
 {
@@ -32,10 +28,6 @@ typedef struct s_stack
 	t_node			*bottom;		/* Puntero al último nodo (optimiza rra/rrb) */
 	int				size;			/* Tamaño actual del stack */
 }	t_stack;
-
-/* ========================================================================== */
-/* 🛠️ SETUP & INFRASTRUCTURE (src/setup/)                                    */
-/* ========================================================================== */
 
 /* parsing.c */
 int		check_args(int argc, char **argv);
