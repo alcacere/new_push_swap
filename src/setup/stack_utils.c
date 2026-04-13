@@ -1,6 +1,7 @@
+/* src/setup/stack_utils.c */
+
 #include "push_swap.h"
 
-/* Inicializa los contenedores de los stacks asegurando que esten limpios */
 void	init_stacks(t_stack *a, t_stack *b)
 {
 	if (a)
@@ -17,7 +18,6 @@ void	init_stacks(t_stack *a, t_stack *b)
 	}
 }
 
-/* Inserta un nodo en la CIMA (top) del stack. Actualiza bottom si es el 1ro */
 void	push_node(t_stack *stack, t_node *new_node)
 {
 	if (!stack || !new_node)
@@ -39,7 +39,6 @@ void	push_node(t_stack *stack, t_node *new_node)
 	stack->size++;
 }
 
-/* Extrae y devuelve el nodo de la CIMA del stack. Desconecta sus punteros */
 t_node	*pop_node(t_stack *stack)
 {
 	t_node	*popped;
@@ -61,4 +60,62 @@ t_node	*pop_node(t_stack *stack)
 	popped->prev = NULL;
 	stack->size--;
 	return (popped);
+}
+
+/* Helper estatico: Inserta por ABAJO para mantener el orden del argv */
+static void	append_node(t_stack *a, int val)
+{
+	t_node	*n;
+
+	n = malloc(sizeof(t_node));
+	if (!n)
+		error_exit(a, NULL);
+	n->value = val;
+	n->index = 0;
+	n->pos = 0;
+	n->target_pos = 0;
+	n->cost_a = 0;
+	n->cost_b = 0;
+	n->total_cost = 0;
+	n->above_median = false;
+	n->next = NULL;
+	n->prev = NULL;
+	if (!a->top)
+	{
+		a->top = n;
+		a->bottom = n;
+	}
+	else
+	{
+		a->bottom->next = n;
+		n->prev = a->bottom;
+		a->bottom = n;
+	}
+	a->size++;
+}
+
+/* Lee el argv, extrae numeros saltando espacios y los inyecta en Stack A */
+void	populate_stack_a(t_stack *a, char **argv)
+{
+	int		i;
+	char	*ptr;
+
+	i = 1;
+	while (argv[i])
+	{
+		ptr = argv[i];
+		while (*ptr)
+		{
+			while (*ptr == ' ')
+				ptr++;
+			if (!*ptr)
+				break ;
+			append_node(a, ft_atoi(ptr));
+			if (*ptr == '-' || *ptr == '+')
+				ptr++;
+			while (*ptr >= '0' && *ptr <= '9')
+				ptr++;
+		}
+		i++;
+	}
 }

@@ -5,6 +5,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <limits.h>
+# include "libft.h"
 
 /* Nodo individual: Contiene los datos, metadatos del algoritmo y punteros */
 typedef struct s_node
