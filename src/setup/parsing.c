@@ -27,7 +27,7 @@ static long	ft_atol(const char *str)
 * @param string de argv
 * @return int 0 en error 1 en exito
 */
-static int	is_valid_number(char *str)
+bool	is_valid_number(char *str)
 {
 	int	len;
 
@@ -35,14 +35,14 @@ static int	is_valid_number(char *str)
 	if (*str == '-' || *str == '+')
 		str++;
 	if (*str < '0' || *str > '9')
-		return (0);
+		return (false);
 	while (*str == '0')
 		str++;
 	while (str[len] >= '0' && str[len] <= '9')
 		len++;
 	if (len > 10)
-		return (0);
-	return (1);
+		return (false);
+	return (true);
 }
 
 /* 3. Búsqueda de duplicados sin gastar memoria */

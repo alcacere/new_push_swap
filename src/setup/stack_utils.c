@@ -16,6 +16,8 @@ void	init_stacks(t_stack *a, t_stack *b)
 	{
 		b->top = NULL;
 		b->bottom = NULL;
+		b->smallest = NULL;
+		b->highest = NULL;
 		b->size = 0;
 	}
 }

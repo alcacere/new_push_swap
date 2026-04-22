@@ -48,6 +48,7 @@ typedef struct s_stack
 
 /* parsing.c */
 int		check_args(int argc, char **argv);
+bool	is_valid_number(char *str);
 
 /* flags.c */
 bool	parse_flags(int argc, char **argv, bool *bench_mode);
