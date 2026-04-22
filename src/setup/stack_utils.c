@@ -8,6 +8,8 @@ void	init_stacks(t_stack *a, t_stack *b)
 	{
 		a->top = NULL;
 		a->bottom = NULL;
+		a->smallest = NULL;
+		a->highest = NULL;
 		a->size = 0;
 	}
 	if (b)
@@ -39,7 +41,7 @@ void	push_node(t_stack *stack, t_node *new_node)
 	stack->size++;
 }
 
-t_node	*pop_node(t_stack *stack)
+t_node	*pop_node_top(t_stack *stack)
 {
 	t_node	*popped;
 
@@ -62,14 +64,55 @@ t_node	*pop_node(t_stack *stack)
 	return (popped);
 }
 
+t_node	*pop_node_bottom(t_stack *stack)
+{
+	t_node	*popped;
+
+	if (!stack || stack->size == 0)
+		return (NULL);
+	popped = stack->bottom;
+	if (stack->size == 1)
+	{
+		stack->top = NULL;
+		stack->bottom = NULL;
+	}
+	else
+	{
+		stack->bottom = stack->bottom->prev;
+		stack->bottom->next = NULL;
+	}
+	popped->next = NULL;
+	popped->prev = NULL;
+	stack->size--;
+	return (popped);
+}
+
+void	append_node(t_stack *stack, t_node *new_node)
+{
+	if (!stack || !new_node)
+		return ;
+	if (!stack->top)
+	{
+		stack->top = new_node;
+		stack->bottom = new_node;
+	}
+	else
+	{
+		stack->bottom->next = new_node;
+		new_node->prev = stack->bottom;
+		stack->bottom = new_node;
+	}
+	stack->size++;
+}
+
 /* Helper estatico: Inserta por ABAJO para mantener el orden del argv */
-static void	append_node(t_stack *a, int val)
+static t_node	*init_node(int val)
 {
 	t_node	*n;
 
 	n = malloc(sizeof(t_node));
 	if (!n)
-		error_exit(a, NULL);
+		error_exit(NULL, NULL);
 	n->value = val;
 	n->index = 0;
 	n->pos = 0;
@@ -80,25 +123,15 @@ static void	append_node(t_stack *a, int val)
 	n->above_median = false;
 	n->next = NULL;
 	n->prev = NULL;
-	if (!a->top)
-	{
-		a->top = n;
-		a->bottom = n;
-	}
-	else
-	{
-		a->bottom->next = n;
-		n->prev = a->bottom;
-		a->bottom = n;
-	}
-	a->size++;
+	return (n);
 }
 
 /* Lee el argv, extrae numeros saltando espacios y los inyecta en Stack A */
-void	populate_stack_a(t_stack *a, char **argv)
+int	populate_stack_a(t_stack *a, char **argv)
 {
 	int		i;
 	char	*ptr;
+	t_node	*new_node;
 
 	i = 1;
 	while (argv[i])
@@ -110,7 +143,10 @@ void	populate_stack_a(t_stack *a, char **argv)
 				ptr++;
 			if (!*ptr)
 				break ;
-			append_node(a, ft_atoi(ptr));
+			new_node = init_node(ft_atoi(ptr));
+			if (!new_node)
+				return (0);
+			append_node(a, new_node);
 			if (*ptr == '-' || *ptr == '+')
 				ptr++;
 			while (*ptr >= '0' && *ptr <= '9')
@@ -118,4 +154,5 @@ void	populate_stack_a(t_stack *a, char **argv)
 		}
 		i++;
 	}
+	return (find_node_by_size(a), 1);
 }

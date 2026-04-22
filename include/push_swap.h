@@ -6,6 +6,8 @@
 # include <stdbool.h>
 # include <limits.h>
 # include "libft.h"
+# include "instructions.h"
+# include "algorithms.h"
 
 /* Nodo individual: Contiene los datos, metadatos del algoritmo y punteros */
 typedef struct s_node
@@ -27,6 +29,8 @@ typedef struct s_stack
 {
 	t_node			*top;			/* Puntero al primer nodo */
 	t_node			*bottom;		/* Puntero al último nodo (optimiza rra/rrb) */
+	t_node			*smallest;		/* Puntero al nodo con el valor mas pequeñito */
+	t_node			*highest;		/* Puntero al nodo con el valor mas grandote*/
 	int				size;			/* Tamaño actual del stack */
 }	t_stack;
 
@@ -38,10 +42,12 @@ bool	parse_flags(int argc, char **argv, bool *bench_mode);
 
 /* stack_utils.c (Stack API Design) */
 void	init_stacks(t_stack *a, t_stack *b);
-void	populate_stack_a(t_stack *a, char **argv);
+int	populate_stack_a(t_stack *a, char **argv);
 void	push_node(t_stack *stack, t_node *new_node);
-t_node	*pop_node(t_stack *stack);
+t_node	*pop_node_top(t_stack *stack);
+t_node	*pop_node_bottom(t_stack *stack);
 bool	is_sorted(t_stack *stack);
+void	append_node(t_stack *stack, t_node *new_node);
 
 /* memory.c */
 void	free_stack(t_stack *stack);

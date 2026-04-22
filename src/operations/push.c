@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include "instructions.h"
 
 void	pa(t_stack *a, t_stack *b, bool silent)
 {
@@ -7,7 +6,7 @@ void	pa(t_stack *a, t_stack *b, bool silent)
 
 	if (!b || b->size == 0)
 		return ;
-	to_push = pop_node(b);
+	to_push = pop_node_top(b);
 	push_node(a, to_push);
 	if (silent == false)
 		write(1, "pa\n", 3);
@@ -19,7 +18,7 @@ void	pb(t_stack *a, t_stack *b, bool silent)
 
 	if (!a || a->size == 0)
 		return ;
-	to_push = pop_node(a);
+	to_push = pop_node_top(a);
 	push_node(b, to_push);
 	if (silent == false)
 		write(1, "pb\n", 3);

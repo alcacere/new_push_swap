@@ -3,6 +3,8 @@
 
 # include "push_swap.h"
 
+typedef struct s_stack t_stack;
+
 /* push.c */
 void	pa(t_stack *a, t_stack *b, bool silent);
 void	pb(t_stack *a, t_stack *b, bool silent);

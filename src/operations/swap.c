@@ -8,13 +8,11 @@ void	sa(t_stack *a, bool silent)
 
 	if (!a || a->size < 2)
 		return ;
-	top = pop_node(a);
-	second = pop_node(a);
+	top = pop_node_top(a);
+	second = pop_node_top(a);
 	push_node(a, top);
 	push_node(a, second);
-	
-	if (silent == false)
-		write(1, "sa\n", 3);
+	print_instruction("sa\n", silent);
 }
 
 void	sb(t_stack *b, bool silent)
@@ -25,20 +23,17 @@ void	sb(t_stack *b, bool silent)
 	if (!b || b->size < 2)
 		return ;
 		
-	top = pop_node(b);
-	second = pop_node(b);
+	top = pop_node_top(b);
+	second = pop_node_top(b);
 	
 	push_node(b, top);
 	push_node(b, second);
-	
-	if (silent == false)
-		write(1, "sb\n", 3);
+	print_instruction("sb\n", silent);
 }
 
 void	ss(t_stack *a, t_stack *b, bool silent)
 {
 	sa(a, true);
 	sb(b, true);
-	if (silent == false)
-		write(1, "ss\n", 3);
+	print_instruction("ss\n", silent);
 }
