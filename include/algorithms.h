@@ -20,10 +20,11 @@ typedef struct s_node t_node;
 void	assign_index(t_stack *stack);
 float	compute_disorder(t_stack *stack);
 void	update_positions(t_stack *stack);
-void	set_target_positions(t_stack *a, t_stack *b);
+void	set_target_a_to_b(t_stack *a, t_stack *b);
+void	set_target_b_to_a(t_stack *a, t_stack *b);
 void	find_node_by_size(t_stack *stack);
 
-void	compute_costs(t_stack *a, t_stack *b);
+void	calculate_costs(t_stack *a, t_stack *b);
 void	calc_cost_a(t_node *node, int len_a);
 void	calc_cost_b(t_node *node, int len_b);
 t_node	*get_cheapest(t_stack *stack);

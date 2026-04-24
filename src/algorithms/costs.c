@@ -1,0 +1,55 @@
+#include "push_swap.h"
+
+static void	set_total_cost(t_stack *a, t_stack *b, t_node *current)
+{
+	current->total_cost = current->cost_a + current->cost_b;
+	if ((current->pos <= a->size / 2) == (current->target_pos <= b->size / 2))
+	{
+		current->total_cost = current->cost_b;
+		if (current->cost_a > current->cost_b)
+			current->total_cost = current->cost_a;
+	}
+}
+
+void    calculate_costs(t_stack *a, t_stack *b)
+{
+	t_node	*current_a;
+
+	if (!a || !b)
+		return ;
+	current_a = a->top;
+	while (current_a)
+	{
+		current_a->cost_a = current_a->pos;
+		current_a->cost_b = current_a->target_pos;
+		if (current_a->pos > a->size / 2)
+			current_a->cost_a = a->size - current_a->pos;
+		if (current_a->target_pos > b->size / 2)
+			current_a->cost_b = b->size - current_a->target_pos;
+		set_total_cost(a, b, current_a);
+		current_a = current_a->next;
+	}
+}
+
+t_node  *get_cheapest(t_stack *stack)
+{
+	long	best_cost;
+	t_node	*cheapest_node;
+	t_node	*current;
+
+	if (!stack)
+		return (NULL);
+	best_cost = LONG_MAX;
+	cheapest_node = stack->top;
+	current = stack->top;
+	while (current)
+	{
+		if (current->total_cost < best_cost)
+		{
+			cheapest_node = current;
+			best_cost = current->total_cost;
+		}
+		current = current->next;
+	}
+	return (cheapest_node);
+}

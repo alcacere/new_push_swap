@@ -6,15 +6,15 @@
 static int	get_node_pos(t_stack *stack, int target_index)
 {
 	t_node	*curr;
-	int		pos;
+	int		position;
 
 	curr = stack->top;
-	pos = 0;
+	position = 0;
 	while (curr)
 	{
 		if (curr->index == target_index)
-			return (pos);
-		pos++;
+			return (position);
+		position++;
 		curr = curr->next;
 	}
 	return (0);
@@ -40,9 +40,7 @@ static void	push_chunks_to_b(t_stack *a, t_stack *b, int chunk_size)
 			i++;
 		}
 		else
-		{
 			ra(a, false); // No nos interesa aún: lo mandamos al fondo de A
-		}
 	}
 }
 
@@ -50,7 +48,7 @@ static void	push_chunks_to_b(t_stack *a, t_stack *b, int chunk_size)
 static void	push_back_to_a(t_stack *a, t_stack *b)
 {
 	int	max_idx;
-	int	pos;
+	int	position;
 
 	while (b->size > 0)
 	{
@@ -58,10 +56,10 @@ static void	push_back_to_a(t_stack *a, t_stack *b)
 		// los indices van de 0 a N-1, el numero más grande que queda 
 		// en B SIEMPRE es exactamente (b->size - 1).
 		max_idx = b->size - 1; 
-		pos = get_node_pos(b, max_idx);
+		position = get_node_pos(b, max_idx);
 		
 		// Si esta en la mitad de arriba, giramos normal
-		if (pos <= b->size / 2)
+		if (position <= b->size / 2)
 		{
 			while (b->top->index != max_idx)
 				rb(b, false);
@@ -83,13 +81,11 @@ void	medium(t_stack *a, t_stack *b)
 
 	if (is_sorted(a) || a->size == 0)
 		return ;
-		
 	// Para 100 números, un bloque de 15 a 20 es el "Sweet Spot" de eficiencia.
 	if (a->size <= 100)
 		chunk_size = 15;
 	else
 		chunk_size = 35; // Si le meten 500 números, ampliamos la red
-		
 	push_chunks_to_b(a, b, chunk_size);
 	push_back_to_a(a, b);
 }
