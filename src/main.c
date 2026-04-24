@@ -12,6 +12,8 @@ int main(int ac, char **av)
 	init_stacks(&a, &b);
 	populate_stack_a(&a, av);
 	assign_index(&a);
-	medium(&a, &b);
+	complex(&a, &b);
+	free_stack(&a);
+	free_stack(&b);
 	return (0);
 }

@@ -1,5 +1,15 @@
 #include "push_swap.h"
 
+int	ft_issign(char c)
+{
+	return (c == '+' || c == '-');
+}
+
+int	ft_isspace(char c)
+{
+	return (c == ' ' || (c >= 9 && c <= 13));
+}
+
 /* 1. Convierte el string a long */
 static long	ft_atol(const char *str)
 {
@@ -8,13 +18,13 @@ static long	ft_atol(const char *str)
 
 	result = 0;
 	sign = 1;
-	if (*str == '-' || *str == '+')
+	if (ft_issign(*str))
 	{
 		if (*str == '-')
 			sign = -1;
 		str++;
 	}
-	while (*str >= '0' && *str <= '9')
+	while (ft_isdigit(*str))
 	{
 		result = result * 10 + (*str - '0');
 		str++;
@@ -32,13 +42,13 @@ bool	is_valid_number(char *str)
 	int	len;
 
 	len = 0;
-	if (*str == '-' || *str == '+')
+	if (ft_issign(*str))
 		str++;
-	if (*str < '0' || *str > '9')
+	if (!ft_isdigit(*str))
 		return (false);
 	while (*str == '0')
 		str++;
-	while (str[len] >= '0' && str[len] <= '9')
+	while (ft_isdigit(str[len]))
 		len++;
 	if (len > 10)
 		return (false);
@@ -58,15 +68,15 @@ static int	has_duplicate(char **argv, int cur_arg, char *cur_ptr, long val)
 		ptr = argv[i];
 		while (*ptr)
 		{
-			while (*ptr == ' ')
+			while (ft_isspace(*ptr))
 				ptr++;
 			if (!*ptr || (i == cur_arg && ptr == cur_ptr))
 				break ;
 			if (ft_atol(ptr) == val)
 				return (1);
-			if (*ptr == '-' || *ptr == '+')
+			if (ft_issign(*ptr))
 				ptr++;
-			while (*ptr >= '0' && *ptr <= '9')
+			while (ft_isdigit(*ptr))
 				ptr++;
 		}
 		i++;
@@ -85,7 +95,7 @@ static int	process_string(char **argv, int i)
 	count = 0;
 	while (*ptr)
 	{
-		while (*ptr == ' ')
+		while (ft_isspace(*ptr))
 			ptr++;
 		if (!*ptr)
 			break ;
@@ -97,11 +107,11 @@ static int	process_string(char **argv, int i)
 		if (has_duplicate(argv, i, ptr, val))
 			return (-1);
 		count++;
-		if (*ptr == '-' || *ptr == '+')
+		if (ft_issign(*ptr))
 			ptr++;
-		while (*ptr >= '0' && *ptr <= '9')
+		while (ft_isdigit(*ptr))
 			ptr++;
-		if (*ptr != ' ' && *ptr != '\0')
+		if (ft_isspace(*ptr) && *ptr != '\0')
 			return (-1);
 	}
 	return (count);

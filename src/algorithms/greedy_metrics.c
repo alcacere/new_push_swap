@@ -26,7 +26,7 @@ void	set_target_a_to_b(t_stack *a, t_stack *b)
 	t_node	*current_a;
 	t_node	*current_b;
 	int		current_diff;
-	int		best_diff;
+	long	best_diff;
 // TODO: comprobar si el smallest es mas grande que el nodo actual de a;
 	if (!a || !b)
 		return ;
@@ -34,7 +34,7 @@ void	set_target_a_to_b(t_stack *a, t_stack *b)
 	while (current_a)
 	{
 		current_b = b->top;
-		best_diff = INT_MAX;
+		best_diff = LONG_MAX;
 		while (current_b)
 		{
 			current_diff = current_a->index - current_b->index;
@@ -45,7 +45,7 @@ void	set_target_a_to_b(t_stack *a, t_stack *b)
 			}
 			current_b = current_b->next;
 		}
-		if (best_diff == INT_MAX)
+		if (best_diff == LONG_MAX)
 			current_a->target_pos = b->highest->pos;
 		current_a = current_a->next;
 	}
@@ -55,7 +55,7 @@ void	set_target_b_to_a(t_stack *a, t_stack *b)
 {
 	t_node	*current_a;
 	t_node	*current_b;
-	int		best_diff;
+	long	best_diff;
 
 	if (!a || !b)
 		return ;
@@ -63,7 +63,7 @@ void	set_target_b_to_a(t_stack *a, t_stack *b)
 	while (current_b)
 	{
 		current_a = a->top;
-		best_diff = INT_MAX;
+		best_diff = LONG_MAX;
 		while (current_a)
 		{
 		if ((current_a->index - current_b->index) > 0 
@@ -74,7 +74,7 @@ void	set_target_b_to_a(t_stack *a, t_stack *b)
 			}
 			current_a = current_a->next;
 		}
-		if (best_diff == INT_MAX)
+		if (best_diff == LONG_MAX)
 			current_b->target_pos = a->smallest->pos;
 		current_b = current_b->next;
 	}
