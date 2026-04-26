@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gigarcia <gigarcia@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/26 13:59:12 by gigarcia          #+#    #+#             */
+/*   Updated: 2026/04/26 14:00:19 by gigarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-#include "algorithms.h"
 
 t_strategy	select_strategy(t_stack *a, t_stack *b, t_config cfg, float disorder)
 {
