@@ -8,8 +8,7 @@ void	pa(t_stack *a, t_stack *b, bool silent)
 		return ;
 	to_push = pop_node_top(b);
 	push_node(a, to_push);
-	if (silent == false)
-		write(1, "pa\n", 3);
+	print_instruction("pa\n", silent);
 }
 
 void	pb(t_stack *a, t_stack *b, bool silent)
@@ -20,6 +19,5 @@ void	pb(t_stack *a, t_stack *b, bool silent)
 		return ;
 	to_push = pop_node_top(a);
 	push_node(b, to_push);
-	if (silent == false)
-		write(1, "pb\n", 3);
+	print_instruction("pa\n", silent);
 }

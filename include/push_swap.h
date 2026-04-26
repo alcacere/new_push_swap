@@ -51,20 +51,23 @@ typedef struct s_config
 	int			arg_start;
 }	t_config;
 
-typedef struct s_inst_counter
+/* Añadir donde tienes tus otras estructuras en push_swap.h */
+typedef struct s_stats
 {
-	int	pa;
-	int	pb;
+	bool	bench_mode;
+	int	total_ops;
 	int	sa;
 	int	sb;
 	int	ss;
+	int	pa;
+	int	pb;
 	int	ra;
 	int	rb;
 	int	rr;
-	int rra;
+	int	rra;
 	int	rrb;
 	int	rrr;
-} t_inst_counter;
+}	t_stats;
 
 /* Contenedor del Stack: Maneja la lista de forma global (Optimización O(1)) */
 typedef struct s_stack
@@ -74,9 +77,12 @@ typedef struct s_stack
 	t_node			*smallest;		/* Puntero al nodo con el valor mas pequeñito */
 	t_node			*highest;		/* Puntero al nodo con el valor mas grandote*/
 	int				size;			/* Tamaño actual del stack */
-	bool			silent;			/* Si imprime o no imprime */
 }	t_stack;
 
+
+/* bench */
+t_stats		*get_stats(void);
+void	print_bench_stats(float disorder, t_strategy original, t_strategy executed);
 
 /* Parsing */
 int		check_args(int argc, char **argv, int start);

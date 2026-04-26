@@ -38,6 +38,5 @@ void	rrr(t_stack *a, t_stack *b, bool silent);
 
 /* output.c */
 void	print_instruction(char *inst, bool silent);
-void	print_bench_stats(t_stack *a, int moves, float disorder);
 
 #endif

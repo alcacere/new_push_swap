@@ -41,7 +41,7 @@ void	find_node_by_size(t_stack *stack)
 }
 
 /* Helper: Ordena un array de enteros de menor a mayor (Bubble Sort) */
-static void	sort_int_array(int *arr, int size)
+void	sort_int_array(int *arr, int size)
 {
 	int	i;
 	int	j;

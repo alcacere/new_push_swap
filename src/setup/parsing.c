@@ -1,10 +1,6 @@
 #include "push_swap.h"
 
-/*
-* @brief evalua signos, digitos y super overflow
-* @param string de argv
-* @return int 0 en error 1 en exito
-*/
+/* @brief evalua signos, digitos y super overflow */
 bool	is_valid_number(char *str)
 {
 	int	len;
@@ -23,14 +19,12 @@ bool	is_valid_number(char *str)
 	return (true);
 }
 
-/* 3. Búsqueda de duplicados sin gastar memoria */
-
-static int	has_duplicate(char **argv, int cur_arg, char *cur_ptr, long val)
+static int	has_duplicate(char **argv, int start, int cur_arg, char *cur_ptr, long val)
 {
 	int		i;
 	char	*ptr;
 
-	i = 1;
+	i = start;
 	while (i <= cur_arg)
 	{
 		ptr = argv[i];
@@ -52,8 +46,7 @@ static int	has_duplicate(char **argv, int cur_arg, char *cur_ptr, long val)
 	return (0);
 }
 
-/* 4. Procesa string: Retorna -1 si hay error, o la CANTIDAD de números que halló */
-static int	process_string(char **argv, int i)
+static int	process_string(char **argv, int start, int i)
 {
 	char	*ptr;
 	long	val;
@@ -72,7 +65,7 @@ static int	process_string(char **argv, int i)
 		val = ft_atol(ptr);
 		if (val > 2147483647 || val < -2147483648)
 			return (-1);
-		if (has_duplicate(argv, i, ptr, val))
+		if (has_duplicate(argv, start, i, ptr, val))
 			return (-1);
 		count++;
 		if (ft_issign(*ptr))
@@ -85,20 +78,21 @@ static int	process_string(char **argv, int i)
 	return (count);
 }
 
-/* 5. Función principal: Falla rápido (-1) o devuelve la cantidad total exacta */
 int	check_args(int argc, char **argv, int start)
 {
 	int	total_numbers;
 	int	current_count;
+	int	i;
 
 	total_numbers = 0;
-	while (start < argc)
+	i = start;
+	while (i < argc)
 	{
-		current_count = process_string(argv, start);
+		current_count = process_string(argv, start, i);
 		if (current_count == -1)
 			return (-1);
 		total_numbers += current_count;
-		start++;
+		i++;
 	}
 	return (total_numbers);
 }

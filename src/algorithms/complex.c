@@ -1,116 +1,119 @@
 #include "push_swap.h"
 #include "algorithms.h"
 
-/* Helper 1: Consigue el puntero exacto del alma gemela usando la posicion */
-static t_node *get_target_node(t_stack *stack, int target_pos)
+/* Helper para encontrar la mediana de un bloque específico de 'len' tamaño */
+int		get_median(t_node *top, int len)
 {
-	t_node	*target;
-	int		i;
+	int	*arr;
+	int	i;
+	int	ret;
 
-	if (!stack)
-		return (NULL);
+	if (!top || len == 0)
+		return (-1);
+	arr = (int *)malloc(sizeof(int) * len);
+	if (!arr)
+		return (-1);
 	i = 0;
-	target = stack->top;
-	while (i++ < target_pos)
-		target = target->next;
-	return (target);
+	while (i < len)
+	{
+		arr[i] = top->value;
+		top = top->next;
+		i++;
+	}
+	sort_int_array(arr, len);
+	ret = arr[len / 2];
+	return (free(arr), ret);
 }
 
-/* Helper 2: Ejecuta las rotaciones (dobles y simples) y hace el 'pb' */
-static void move_a_to_b(t_stack *a, t_stack *b, t_node *cheapest)
-{
-	t_node	*target_node;
+/* Mini-ordenamientos para cuando el bloque que llega tiene 3 números o menos */
+void	sort_small_a(t_stack *a, t_stack *b, int len);
+void	sort_small_b(t_stack *a, t_stack *b, int len);
 
-	if (!a || !b || !cheapest)
-		return ;
-	target_node = get_target_node(b, cheapest->target_pos);
-	if (cheapest->above_median == true && target_node->above_median == true)
-	{
-		while (a->top != cheapest && b->top != target_node)
-			rr(a, b, false);
-	}
-	else if (cheapest->pos > a->size / 2 && target_node->pos > b->size / 2)
-	{
-		while (a->top != cheapest && b->top != target_node)
-			rrr(a, b, false);
-	}
-	while (a->top != cheapest)
-	{
-		if (cheapest->pos <= a->size / 2)
-			ra(a, false);
-		else
-			rra(a, false);
-	}
-	while (b->top != target_node)
-	{
-		if (target_node->pos <= b->size / 2)
-			rb(b, false);
-		else
-			rrb(b, false);
-	}
-	pb(a, b, false);
+/* Los motores recursivos */
+void quicksort_a(t_stack *a, t_stack *b, int len)
+{
+    int pivot;
+    int pushed;
+    int rotated;
+    int i;
+
+    pushed = 0;
+    rotated = 0;
+    i = 0;
+    if (len <= 3)
+    {
+        sort_small_a(a, b, len);
+        return ;
+    }
+    pivot = get_median(a->top, len);
+    while (i < len)
+    {
+        if (a->top->value < pivot)
+        {
+            pb(a, b, false);
+            pushed++;
+        }
+        else
+        {
+            ra(a, false);
+            rotated++;
+        }
+        i++;
+    }
+    if (rotated != a->size && a->size > 2)
+    {
+        while (rotated > 0)
+        {
+            rra(a, false);
+            rotated--;
+        }
+    }
+    quicksort_a(a, b, len - pushed);
+    quicksort_b(a, b, pushed);
 }
-/* Helper 3: Prepara el Stack A para recibir el nodo de B y hace 'pa' */
-static void move_b_to_a(t_stack *a, t_stack *b, t_node *node_b)
+void	quicksort_b(t_stack *a, t_stack *b, int len)
 {
-	t_node	*target_node;
+    int pivot;
+    int pushed;
+    int rotated;
+    int i;
 
-	if(!a || !b || !node_b)
-		return ;
-	target_node = get_target_node(a, node_b->target_pos);
-	while (a->top != target_node)
-	{
-		if (target_node->pos <= a->size / 2)
-			ra(a, false);
-		else
-			rra(a, false);
-	}
-	pa(a, b, false);
+    pushed = 0;
+    rotated = 0;
+    i = 0;
+    if (len <= 3)
+    {
+        sort_small_b(a, b, len);
+        return ;
+    }
+    pivot = get_median(b->top, len);
+    while (i < len)
+    {
+        if (b->top->value >= pivot)
+        {
+            pa(a, b, false);
+            pushed++;
+        }
+        else
+        {
+            rb(b, false);
+            rotated++;
+        }
+        i++;
+    }
+    if (rotated != b->size)
+    {
+        while (rotated > 0)
+        {
+            rrb(b, false);
+            rotated--;
+        }
+    }
+    quicksort_a(a, b, pushed);
+    quicksort_b(a, b, len - pushed);
 }
-
-/* La función principal que el main va a llamar */
-void complex(t_stack *a, t_stack *b)
+/* El director que reemplazará a complex() */
+void	complex(t_stack *a, t_stack *b)
 {
-	t_node	*cheapest;
-
-	if (!a || !b)
-		return ;
-	if (a->size > 3)
-	{
-		pb(a, b, false);
-		pb(a, b, false);
-	}
-	while (a->size > 3)
-	{
-		find_node_by_size(a);
-		find_node_by_size(b);
-		update_positions(a);
-		update_positions(b);
-		set_target_a_to_b(a, b);
-		calculate_costs(a, b);
-		cheapest = get_cheapest(a);
-		move_a_to_b(a, b, cheapest);
-	}
-	simple(a, b);
-	while (b->size > 0)
-	{
-		find_node_by_size(a);
-		find_node_by_size(b);
-		update_positions(a);
-		update_positions(b);
-		set_target_b_to_a(a, b);
-		move_b_to_a(a, b, b->top);
-	}
-	find_node_by_size(a);
-	find_node_by_size(b);
-	update_positions(a);
-	// sin comprobar mitad: 245
-	//comprobando: 209 
-	while (a->smallest != a->top)
-	{
-		if (a->smallest->above_median == true)
-			ra(a, false);
-		else
-			rra(a, false);
-	}
+	quicksort_a(a, b, a->size);
 }
