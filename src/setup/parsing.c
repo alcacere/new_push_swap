@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gigarcia <gigarcia@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/26 13:36:15 by gigarcia          #+#    #+#             */
+/*   Updated: 2026/04/26 13:37:12 by gigarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-/* @brief evalua signos, digitos y super overflow */
+/* @brief evaluates signs, digits and superoverflow */
 bool	is_valid_number(char *str)
 {
 	int	len;

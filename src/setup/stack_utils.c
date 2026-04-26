@@ -1,4 +1,14 @@
-/* src/setup/stack_utils.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gigarcia <gigarcia@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/26 13:45:45 by gigarcia          #+#    #+#             */
+/*   Updated: 2026/04/26 13:46:28 by gigarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "push_swap.h"
 
@@ -107,7 +117,6 @@ void	append_node(t_stack *stack, t_node *new_node)
 	stack->size++;
 }
 
-/* Helper estatico: Inserta por ABAJO para mantener el orden del argv */
 static t_node	*init_node(int val)
 {
 	t_node	*n;
@@ -124,7 +133,6 @@ static t_node	*init_node(int val)
 	return (n);
 }
 
-/* Lee el argv, extrae numeros saltando espacios y los inyecta en Stack A */
 int	populate_stack_a(t_stack *a, char **argv, int start)
 {
 	char	*ptr;

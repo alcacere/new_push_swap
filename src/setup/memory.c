@@ -1,8 +1,17 @@
-/* src/setup/memory.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   memory.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gigarcia <gigarcia@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/26 13:35:14 by gigarcia          #+#    #+#             */
+/*   Updated: 2026/04/26 13:35:35 by gigarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* Libera iterativamente todos los nodos de un stack (si existe) */
 void	free_stack(t_stack *stack)
 {
 	t_node	*current;
@@ -22,7 +31,6 @@ void	free_stack(t_stack *stack)
 	stack->size = 0;
 }
 
-/* Boton del panico: Limpia la memoria de ambos stacks y aborta */
 void	error_exit(t_stack *a, t_stack *b)
 {
 	if (a)
