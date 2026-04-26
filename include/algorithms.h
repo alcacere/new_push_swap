@@ -27,6 +27,8 @@ void	set_target_a_to_b(t_stack *a, t_stack *b);
 void	set_target_b_to_a(t_stack *a, t_stack *b);
 void	find_node_by_size(t_stack *stack);
 
+void	sort_small_a(t_stack *a, int len);
+void	sort_small_b(t_stack *a, t_stack *b, int len);
 void	calculate_costs(t_stack *a, t_stack *b);
 void	calc_cost_a(t_node *node, int len_a);
 void	calc_cost_b(t_node *node, int len_b);

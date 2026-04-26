@@ -19,5 +19,5 @@ void	pb(t_stack *a, t_stack *b, bool silent)
 		return ;
 	to_push = pop_node_top(a);
 	push_node(b, to_push);
-	print_instruction("pa\n", silent);
+	print_instruction("pb\n", silent);
 }

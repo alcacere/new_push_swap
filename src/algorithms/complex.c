@@ -1,6 +1,8 @@
 #include "push_swap.h"
 #include "algorithms.h"
 
+void	quicksort_b(t_stack *a, t_stack *b, int len);
+
 /* Helper para encontrar la mediana de un bloque específico de 'len' tamaño */
 int		get_median(t_node *top, int len)
 {
@@ -25,10 +27,6 @@ int		get_median(t_node *top, int len)
 	return (free(arr), ret);
 }
 
-/* Mini-ordenamientos para cuando el bloque que llega tiene 3 números o menos */
-void	sort_small_a(t_stack *a, t_stack *b, int len);
-void	sort_small_b(t_stack *a, t_stack *b, int len);
-
 /* Los motores recursivos */
 void quicksort_a(t_stack *a, t_stack *b, int len)
 {
@@ -42,7 +40,7 @@ void quicksort_a(t_stack *a, t_stack *b, int len)
     i = 0;
     if (len <= 3)
     {
-        sort_small_a(a, b, len);
+        sort_small_a(a, len);
         return ;
     }
     pivot = get_median(a->top, len);
@@ -71,6 +69,7 @@ void quicksort_a(t_stack *a, t_stack *b, int len)
     quicksort_a(a, b, len - pushed);
     quicksort_b(a, b, pushed);
 }
+
 void	quicksort_b(t_stack *a, t_stack *b, int len)
 {
     int pivot;

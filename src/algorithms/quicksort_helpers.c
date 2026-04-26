@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include "algorithms.h"
 
 /* Helpers para sort_small_a que evitan superar las 25 lineas de la norma */
 static void	sort_3_a_part2(t_stack *a, int t, int m, int bt)
@@ -87,9 +86,8 @@ static void	sort_3_b(t_stack *b)
 /* LAS FUNCIONES PRINCIPALES DE LOS CASOS BASE              */
 /* -------------------------------------------------------- */
 
-void	sort_small_a(t_stack *a, t_stack *b, int len)
+void	sort_small_a(t_stack *a, int len)
 {
-	(void)b;
 	if (len <= 1 || a->size < 2)
 		return ;
 	if (len == 2)
