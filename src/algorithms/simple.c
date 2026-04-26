@@ -1,11 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   simple.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gigarcia <gigarcia@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/26 15:09:56 by gigarcia          #+#    #+#             */
+/*   Updated: 2026/04/26 15:11:59 by gigarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-#include "instructions.h"
-#include "algorithms.h"
 
 void	update_positions(t_stack *stack)
 {
 	t_node	*current;
-	int	i;
+	int		i;
 
 	if (!stack)
 		return ;
@@ -25,8 +35,7 @@ void	update_positions(t_stack *stack)
 
 static void	sort_three(t_stack *stack)
 {
-    find_node_by_size(stack); 
-    
+	find_node_by_size(stack);
 	if (stack->top == stack->highest)
 		ra(stack, false);
 	else if (stack->top->next == stack->highest)

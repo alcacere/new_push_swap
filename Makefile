@@ -34,7 +34,9 @@ SRC_FILES   = main.c \
               algorithms/simple.c \
               algorithms/medium.c \
               algorithms/complex.c \
-			  algorithms/quicksort_helpers.c
+			  algorithms/quicksort_cases_a.c \
+			  algorithms/quicksort_cases_b.c \
+			  algorithms/complex_utils.c
 
 # Bonus program .c files
 BONUS_FILES = $(filter-out main.c, $(SRC_FILES)) \

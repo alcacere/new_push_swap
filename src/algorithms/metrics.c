@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   metrics.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gigarcia <gigarcia@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/26 15:16:38 by gigarcia          #+#    #+#             */
+/*   Updated: 2026/04/26 15:16:59 by gigarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-#include "algorithms.h"
 
 bool	is_sorted(t_stack *stack)
 {
@@ -43,7 +54,7 @@ void	find_node_by_size(t_stack *stack)
 void	set_index(t_stack *stack, int *arr)
 {
 	t_node	*curr;
-	int	i;
+	int		i;
 
 	curr = stack->top;
 	while (curr)
