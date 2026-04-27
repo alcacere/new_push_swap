@@ -75,7 +75,6 @@ void	set_index(t_stack *stack, int *arr)
 	}
 }
 
-/* Asigna un indice (0 a N-1) copiando a un array, ordenando y mapeando */
 void	assign_index(t_stack *stack)
 {
 	int		*arr;
@@ -99,9 +98,6 @@ void	assign_index(t_stack *stack)
 	free(arr);
 }
 
-/* * Calcula el nivel de desorden del stack comparando todos los pares posibles.
- * Retorna un float entre 0.0 (ordenado) y 1.0 (orden inverso absoluto).
- */
 float	compute_disorder(t_stack *stack)
 {
 	t_node	*curr_i;

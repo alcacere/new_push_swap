@@ -54,7 +54,9 @@ static int	init_prog(t_stack *a, int ac, char **av, t_config *cfg)
 {
 	*cfg = parse_flags(ac, av);
 	get_stats()->bench_mode = cfg->bench_mode;
-	if (cfg->arg_start == ac || check_args(ac, av, cfg->arg_start) == -1)
+	if (cfg->arg_start == ac)
+		return (0);
+	if (check_args(ac, av, cfg->arg_start) == -1)
 	{
 		write(2, "Error\n", 6);
 		return (0);
