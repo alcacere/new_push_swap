@@ -1,15 +1,10 @@
 *Este proyecto ha sido creado como parte del currículo de 42 por gigarcia, rodde-fr.*
 
-## Checklist de requisitos (lo que incluye este README)
-- Primera línea con el formato requerido (autores en cursiva).
-- Sección "Descripción" con objetivo y visión general.
-- Sección "Instrucciones" con compilación y ejecución exacta (Makefile detectado).
-- Sección "Recursos" con referencias y uso de IA.
-- Explicación detallada y justificación de los algoritmos implementados.
+#Push_Swap
 
 ## Descripción
 
-push_swap es una implementación en C del proyecto de 42 cuyo objetivo es ordenar una
+Este proyecto una implementación en C cuyo objetivo es ordenar una
 secuencia de enteros usando únicamente las operaciones permitidas sobre dos pilas:
 push (pa, pb), swap (sa, sb, ss), rotate (ra, rb, rr) y reverse-rotate (rra, rrb, rrr).
 El reto es producir una secuencia válida de operaciones que ordene la entrada con el
@@ -17,7 +12,67 @@ menor número posible de movimientos, cumpliendo las normas del proyecto.
 
 Este repositorio contiene una solución multi-estrategia que elige entre algoritmos
 óptimos para tamaños pequeños, una estrategia "chunking" para tamaños medianos y un
-quicksort / particionado adaptado que actúa como estrategia compleja para entradas grandes.
+quicksort adaptado que actúa como estrategia compleja para entradas con una métrica de desorden alta.
+
+## Autores y reparto de trabajo
+
+### gigarcia
+- Desarrollo general del proyecto
+- Implementación de operaciones (`src/operations/`)
+- Implementación de algoritmos (`simple`, `medium`, `complex`)
+- Métricas y lógica de selección de estrategia
+- Integración del sistema
+
+### rodde-fr
+- Parsing y validación de entrada
+- Implementación de `src/setup/parsing.c`
+- Manejo de errores (inputs inválidos, duplicados, overflow)
+- Inicialización de estructuras
+
+# Estructura del Proyecto
+
+```text
+.
+├── Makefile
+├── README.md
+├── .gitignore
+├── .gitmodules
+├── include/
+│   ├── algorithms.h
+│   ├── instructions.h
+│   └── push_swap.h
+├── src/
+│   ├── main.c
+│   ├── algorithms/
+│   │   ├── complex.c
+│   │   ├── complex_utils.c
+│   │   ├── medium.c
+│   │   ├── metrics.c
+│   │   ├── quicksort_cases_a.c
+│   │   ├── quicksort_cases_b.c
+│   │   └── simple.c
+│   ├── operations/
+│   │   ├── output.c
+│   │   ├── output_bench.c
+│   │   ├── push.c
+│   │   ├── rev_rotate.c
+│   │   ├── rotate.c
+│   │   └── swap.c
+│   └── setup/
+│       ├── flags.c
+│       ├── memory.c
+│       ├── parsing.c
+│       ├── stack_init.c
+│       └── stack_utils.c
+├── bonus/
+│   ├── checker_main.c
+│   └── checker_utils.c
+└── libft/
+    ├── Makefile
+    ├── libft.h
+    ├── get_next_line.c
+    ├── get_next_line.h
+    └── [Múltiples archivos fuente ft_*.c ...]
 
 ## Instrucciones
 
@@ -81,13 +136,11 @@ Estrategias y por qué se eligieron (implementadas en `src/algorithms`):
 
 1) Normalización de índices (assign_index)
 - Qué hace: mapea los valores originales a índices 0..n-1 preservando orden relativo.
-- Justificación: reduce la dependencia del rango de valores y facilita algoritmos basados
-  en bits o índices (por ejemplo, si se implementase radix por bits). Implementado en
-  `algorithms/metrics.c` y usado por las estrategias que operan sobre índices.
+- Justificación: reduce la dependencia del rango de valores y facilita algoritmos basados en bits o índices (por ejemplo, si se implementase radix por bits). Implementado en `algorithms/metrics.c` y usado por las estrategias que operan sobre índices.
 
 2) Estrategia "simple" (función `simple` — `algorithms/simple.c`)
 - Para: entradas pequeñas (n ≤ 5 típicamente).
-- Cómo: aplica soluciones óptimas para 2–3 elementos (`sort_three` / `sort_3_a`) y desplaza
+- Aplica soluciones óptimas para 2–3 elementos (`sort_three` / `sort_3_a`) y desplaza
   repetidamente el elemento más pequeño a la pila B hasta reducir a 3 elementos; ordena
   esa subpila y vuelve a extraer desde B con `pa`.
 - Justificación: para entradas cortas, es trivial encontrar secuencias mínimas. Evita
@@ -95,26 +148,24 @@ Estrategias y por qué se eligieron (implementadas en `src/algorithms`):
 
 3) Estrategia "medium" / chunking (función `medium` — `algorithms/medium.c`)
 - Para: entradas medianas (por ejemplo, n ≤ ~100 y n > 5), con heurística de chunk size.
-- Cómo: convierte valores a índices (indices ya asignados por `assign_index`), luego
+- Convierte valores a índices (indices ya asignados por `assign_index`), luego
   mueve elementos en "chunks" desde A a B según su índice; al empujar a B, algunos se
   rotan para facilitar su posterior recolocación; finalmente reconstruye A extrayendo
   de B el mayor índice disponible.
-- Parámetros: el código usa chunk_size = 15 para n ≤ 100 y 35 para n > 100. Estos valores
-  balancean número de movimientos frente a rotaciones y son heurísticos comunes.
+- Parámetros: el código usa chunk_size = 15 para n ≤ 100 y 35 para n > 100. Estos valores balancean número de movimientos frente a rotaciones y son heurísticos comunes.
 - Justificación: reduce la cantidad de rotaciones y búsquedas para valores dispersos, y
   suele producir buenos resultados en tests de 100 y 500 elementos.
 
-4) Estrategia "complex" / particionado recursivo (función `complex` — `algorithms/complex.c`)
-- Para: entradas grandes o cuando la heurística lo decide.
+4) Estrategia "complex", quicksort recursivo (función `complex` — `algorithms/complex.c`)
+- Para: entradas grandes o cuando la heurística (métrica de desorden) lo decide.
 - Cómo (implementación propia style quicksort-partition):
   - `quicksort_a` y `quicksort_b` hacen particionado por un pivote (mediana calculada
     sobre la sublista con `get_median` en `algorithms/complex_utils.c`).
   - En `quicksort_a` se empujan a B los elementos menores que el pivote y se rotan los
-    demás; tras particionar se 'rewind' (recolocar mediante `rra`/`rrb`) para restaurar
-    el orden relativo, y se recursiona en ambas particiones.
+    demás; tras particionar se 'recolocan' (recolocar mediante `rra`/`rrb`) para restaurar el orden relativo, y se recursiona en ambas particiones.
   - Para segmentos de tamaño ≤ 3 se usan funciones `sort_small_a` / `sort_small_b`
     que aplican secuencias mínimas específicas.
-- Justificación: este enfoque imita el quicksort adaptado al conjunto limitado de
+- Este enfoque imita el quicksort adaptado al conjunto limitado de
   operaciones (push/rotate). Reduce la profundidad de recursión de forma eficiente y
   es efectivo en entradas grandes donde chunking puede resultar subóptimo.
 
@@ -184,14 +235,4 @@ Comprobación de errores:
 - `src/algorithms/complex.c`, `complex_utils.c` — particionado recursivo y mediana.
 - `include/` — estructuras de datos (`t_stack`, `t_node`) y prototipos públicos.
 
-## Autores
 
-- gigarcia (42 login: gigarcia)
-- rodde-fr (42 login: rodde-fr)
-
-## Estado y pasos siguientes recomendados
-
-- Estado: compilable usando el `Makefile` provisto; las estrategias principales están
-  implementadas y documentadas arriba.
-- Mejora opcional de bajo riesgo: añadir tests unitarios automáticos en `tests/` para
-  `assign_index`, operaciones y casos pequeños (esto ya se sugiere en el README antiguo).
