@@ -156,18 +156,17 @@ Notas de uso:
 ## Recursos
 
 - Documentación y enunciado del proyecto (PDF del sujeto de 42).
-- Radix sort: https://en.wikipedia.org/wiki/Radix_sort
+- Chunk sort: https://en.wikipedia.org/wiki/Chunk_sort
 - Quick sort: https://en.wikipedia.org/wiki/Quicksort
 - Artículos y hilos de 42 sobre `push_swap` y estrategias de chunking / radix.
 
 Uso de IA / declaración sobre IA
 - Se utilizó asistencia de IA para tareas no críticas al código fuente:
-  - Redacción y traducción de este README.
+  - Redacción se este README tomando en cuenta las notas de ambos estudiantes.
   - Explicación de las decisiones algorítmicas en lenguaje natural.
   - Sugerencias para tests y estructura del proyecto.
 - Todo el código fuente compilado y enviado al repositorio fue escrito y revisado por
-  los autores (`gigarcia`, `rodde-fr`). Cualquier salida de IA fue revisada manualmente antes
-  de su incorporación en documentación.
+  los autores (`gigarcia`, `rodde-fr`). 
 
 ## Cómo probar y ejemplos
 
@@ -196,11 +195,5 @@ Comprobación de errores:
 - `src/algorithms/medium.c` — chunking / estrategia intermedia.
 - `src/algorithms/complex.c`, `complex_utils.c` — particionado recursivo y mediana.
 - `include/` — estructuras de datos (`t_stack`, `t_node`) y prototipos públicos.
-
-## Recursos
-
-- Documentación oficial del proyecto 42
-- https://en.wikipedia.org/wiki/Quicksort
-- https://en.wikipedia.org/wiki/Radix_sort
 
 
