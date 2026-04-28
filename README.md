@@ -1,6 +1,6 @@
 *Este proyecto ha sido creado como parte del currículo de 42 por gigarcia, rodde-fr.*
 
-#Push_Swap
+# Push_Swap
 
 ## Descripción
 
